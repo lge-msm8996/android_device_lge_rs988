@@ -1,0 +1,1 @@
+add_lunch_combo pa_rs988-userdebug

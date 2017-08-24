@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 # Copyright (C) 2016 The CyanogenMod Project
 # Copyright (C) 2017 The LineageOS Project
@@ -16,11 +15,18 @@
 # limitations under the License.
 #
 
-set -e
+LOCAL_PATH := device/lge/rs988
 
-export DEVICE=rs988
-export DEVICE_COMMON=g5-common
-export PLATFORM_COMMON=msm8996-common
-export VENDOR=lge
+# Get non-open-source specific aspects
+$(call inherit-product, vendor/lge/rs988/rs988-vendor.mk)
 
-./../$PLATFORM_COMMON/extract-files.sh $@
+# common g5
+$(call inherit-product, device/lge/g5-common/g5.mk)
+
+# Sensors
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/sensors/sensor_def_h1_lra_us.conf:system/etc/sensors/sensor_def_variable.conf
+
+# WiFi Calibration
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/wifi/bcmdhd.cal:system/etc/wifi/bcmdhd.cal
